@@ -1,7 +1,14 @@
  mov    ah, 0x0e
- mov    al, 65
-int 0x10
-jmp loop
+ mov    al, 64
+ 
+ loop:
+    inc al
+    
+    cmp al, 'Z' + 1 ; if al == 'Z' + 1
+    je  halt        ; goto halt
+
+    int 0x10
+    jmp loop
 
 halt:
     jmp halt
