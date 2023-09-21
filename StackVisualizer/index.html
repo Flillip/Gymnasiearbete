@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stack Visualizer</title>
+    <link rel="stylesheet" href="style.css">
+    <script defer src="script.js"></script>
+</head>
+<body>
+    <div class="controlls">
+        <div class="popper">
+            <h3>Pop from the stack</h3>
+            <input type="text" name="value" id="pop" placeholder="popped value" disabled="true">
+            <button type="button" onclick="popValue()">Pop</button>
+        </div>
+        <div class="adder">
+            <h3>Add value to stack</h3>
+            <input type="text" name="value" id="val">
+            <button type="button" id="addrBtn" onclick="addValue()">Add</button>
+        </div>
+        <div class="function">
+            <h3>Call function</h3>
+            <button type="button" onclick="callFunc()">Call</button>
+        </div>
+        <div class="return">
+            <h3>Return function</h3>
+            <button type="button" onclick="retFunc()">Return</button>
+        </div>
+        <div class="pusha">
+            <h3>Push all registers onto the stack</h3>
+            <button type="button" onclick="pusha()">Pusha</button>
+        </div>
+        <div class="popa">
+            <h3>Pop all registers onto the stack</h3>
+            <button type="button" onclick="popa()">Popa</button>
+        </div>
+        <div class="move">
+            <h3>Move either the base pointer or stack <br/> pointer based on it's relative position</h3>
+            <input type="text" name="value" id="mov">
+            <br>
+            <button type="button" style="margin-top: .25em" id="movBtn" onclick="movbp()">Move bp</button>
+            <button type="button" style="margin-top: .25em" id="movBtn" onclick="movsp()">Move sp</button>
+        </div>
+        <div class="modify">
+            <h3>Modify stack</h3>
+            <input type="text" name="value" id="mod" placeholder="addr">
+            <br>
+            <input style="margin-top: .25em" type="text" name="value" id="modVal" placeholder="value">
+            <button type="button" id="modBtn" onclick="modify()">Modify</button>
+        </div>
+        <div class="read">
+            <h3>Read stack</h3>
+            <input type="text" name="value" id="read" placeholder="addr">
+            <br>
+            <input style="margin-top: .25em" type="text" name="value" id="readVal" placeholder="value" disabled="true">
+            <button type="button" id="readBtn" onclick="read()">Read</button>
+        </div>
+        <div id="sp"></div>
+        <div id="bp"></div>
+        <button type="button" onclick="document.location.reload(true);">Clear Everything</button>
+    </div>
+
+    <div class="pseudo-asm" id="asm">
+        Pseudo assembly: <br/>----<br/>
+    </div>
+
+    <table class="table">
+        <tr>
+            <th>Stack</th>
+        </tr>
+        <tr>
+            <th style="display: initial;">High</th>
+            <th style="display: initial;">Low</th>
+        </tr>
+        <tr id="stack">
+        </tr>
+    </table>
+
+</body>
+</html>
