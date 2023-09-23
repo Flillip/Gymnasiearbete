@@ -41,7 +41,8 @@ read_disk:
 
     jc __rd_err ; if carry = 1, there was an error
 
-    cmp al, 1   ; if al = 1, we succesfully read one sector
+    mov cx, [bp+0x04]
+    cmp al, cl   ; if al = 1, we succesfully read one sector
     je __rd_success
     jmp __rd_err
 
