@@ -1,80 +1,73 @@
  [org 0x7c00]   ; mem origin point is 0x7c00
  
  ; set up stack
- mov bp, 0x8000
+ mov bp, 0x9000
  mov sp, bp
 
- ; start printing 
- push 69
- call print_int
- jmp halt
+ ; 06     = 6
+ ; 0x93c0 = 37824
 
-print_int:
-    pusha
+ xor bx, bx
+ jmp start_read
 
-    mov bp, sp
-    add bp, 0x12
+; read enter terminated input string using the stack
+; and print it out
+start_read:
+    mov sp, bp
+    push 0x00
+    read:
+        call get_input
+        cmp al, 0x00 ; input = null
+        je read
 
-    xor ax, ax
-    mov al, [bp]
+        mov ah, 0
+        push ax
 
-    push 0x0 ; i = 0
-    
-    divide_loop:
-        push ax ; dividend => remainder
-        push 10 ; divisor  => quotient
-        call flr_div
+        mov bl, [bp-2] ; i++
+        add bl, 1
+        mov [bp-2], bl
 
-        pop ax ; quotient
-        ; don't pop remainder cause we need it on the stack
-        
-        mov bl, [bp-20] ; i++
-        add bl, 0x01
-        mov [bp-20], bl
+        cmp al, 0x0d
+        jne read
 
-        cmp al, 0x0a ; al >= 10
-        jge divide_loop
+        mov bl, [bp-2] ; i--
+        sub bl, 1
+        mov [bp-2], bl
 
-    xor ah, ah
-    push ax
+        jmp start_print_str
 
-    print_loop:
-        pop ax
-        xor ah, ah
-        call __print
-        
-        mov bl, [bp-20] ; i--
-        sub bl, 0x01
-        mov [bp-20], bl
+start_print_str:
+    ; jmp halt
+    push bp
+    sub bp, 0x02
+    mov bl, [bp] ; i--
+    ; sub bl, 0x02 ; remove cr/lf
+    print_str:
+        sub bl, 1
 
-        cmp bl, 0x0
-        jnl print_loop
+        sub bp, 0x02 ; bp = bp - 2
 
-    popa
-    ret
+        mov ah, 0x0e
+        mov al, [bp]
+        int 0x10
 
-flr_div:
-    pusha
+        cmp bl, 0 ; i > 0
+        jg print_str ; then start read
 
-    mov bp, sp
-    add bp, 0x12 ; offset off all the registers on stack
-    
-    mov bl, [bp]
-    mov al, [bp+2]
-    xor ah, ah
+        mov ah, 0x0e
+        mov al, 13 ; cr
+        int 0x10
+        mov al, 10 ; lf
+        int 0x10
 
-    div bl
+        pop bp
 
-    mov [bp],   al ; quotient
-    mov [bp+2], ah ; remainder
-    
-    popa
-    ret
+        jmp start_read
 
-__print:
-    mov ah, 0x0e    ; set mode to TTY
-    add al, '0'
-    int 0x10
+; output: al - ascii code, ah - scancode
+get_input:
+    mov ah, 0
+    int 0x16
     ret
 
 halt:

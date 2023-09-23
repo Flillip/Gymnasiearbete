@@ -53,17 +53,27 @@ class Stack {
     }
 
     set stackPointer(value) {
-        const prevSelected = stack.children[this.stackArrayPointer];
-        if (prevSelected !== undefined) {
-            prevSelected.classList.remove("spl");
-            prevSelected.classList.remove("sph");
-        }
+        // const prevSelected = stack.children[this.stackArrayPointer];
+        // if (prevSelected !== undefined) {
+        //     console.log("asd")
+        //     console.log(prevSelected)
+        //     prevSelected.classList.remove("spl");
+        //     prevSelected.classList.remove("sph");
+        // }
         
+        console.log(stack.children)
+        for (let i = 0; i < stack.children.length; i++) {
+            const el = stack.children[i];
+            console.log(el)
+            el.classList.remove("spl");
+            el.classList.remove("sph");
+        }
+
         this.#stack = value;
         value *= -1;
         const uneven = value < 0 ? value + 1 : value - 1;
         const newVal = isEven(value) ? value / 2 : uneven / 2;
-        this.#stackArrPtr = newVal;
+        this.#stackArrPtr = this.#stackArrPtr === 0 ? 0 : newVal;
         this.#arrUpdate(newVal);
         stack.children[this.stackArrayPointer].classList.add(isEven(value) ? "spl" : "sph");
     }
@@ -83,7 +93,8 @@ class Stack {
         value *= -1;
         const uneven = value < 0 ? value + 1 : value - 1;
         const newVal = isEven(value) ? value / 2 : uneven / 2;
-        this.#baseArrPtr = newVal;
+        this.#baseArrPtr = this.#baseArrPtr === 0 && newVal < 0 ? 0 : newVal;
+        console.log(newVal)
         this.#arrUpdate(newVal);
         stack.children[this.baseArrayPointer].classList.add("bpl");
     }
@@ -98,7 +109,7 @@ class Stack {
             const amount = 0 - ptr;
             for (let i = 0; i < amount; i++) {
                 this.#arr.unshift('');
-                stack.appendChild(newCell('...'));
+                // stack.appendChild(newCell('...'));
             }
         }
     }
@@ -163,6 +174,14 @@ function insert(value, skipLog = false) {
 }
 
 function remove(skipLog = false, callback = () => { }) {
+    console.log(pointers.stackArrayPointer)
+    if (pointers.stackArrayPointer === 0) {
+        const cell = newCell('...');
+        stack.append(cell);
+        pointers.stackPointer += 2;
+        return;
+    }
+
     stack.removeChild(stack.children[pointers.stackArrayPointer]);
     pointers.stackPointer += 2;
 }
