@@ -9,3 +9,6 @@ Idag lyckades jag göra klart en bootloader som kan printa heltal upp till 256. 
 
 ## 20/09/23
 Idag jobbade jag mer på stack visualizern. Den har kommit en bra bit nu. Men kan bara pusha på stacken en så länge :p ska fixa pop buggen när du poppar en value under bp nästa gång. Jag MÅSTE börja jobba med asm igen så troligtvis kommer jag göra det.
+
+## 23-24/09/23
+Ja.... Vet inte ens vart jag ska börja. Har gjort så jävla mycket att jag knappt kommer ihåg allt. Men i alla fall. Gjorde video 4 challenge 2, läst från hårddisk, lärt mig om segment descriptor, fått igång cross compiler. Så ganska mycket...

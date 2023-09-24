@@ -5,22 +5,18 @@
     BOOT_DISK db 0
     mov [BOOT_DISK], dl
 
-    xor ax, ax
-    mov es, ax
-    mov ds, ax
     mov bp, 0x8000
     mov sp, bp
 
-    mov bx, KERNEL_LOCATION
-    mov dh, 20
 
-    mov ah, 0x02
-    mov al, dh
-    mov ch, 0x00
-    mov dh, 0x00
-    mov cl, 0x02
-    mov dl, [BOOT_DISK]
-    int 0x13
+    ; set up everything for read disk
+    mov dh, 0x00        ; head nr
+    mov dl, [BOOT_DISK] ; disk nr
+    push 0x0214         ; function & nr of sectors to read
+    push 0x0002         ; cylinder nr and sector number
+    push dx
+    push KERNEL_LOCATION ; where to place code
+    call read_disk
 
     mov ah, 0x0
     mov al, 0x3
@@ -37,6 +33,80 @@
     jmp CODE_SEG:start_protected_mode
 
     jmp $
+
+error_str db "err reading disk", 0
+success_str db "succ reading disk", 0
+
+; usage:
+; push onto stack in the following order:
+; -> ax || function and nr of sectors to read
+; -> cx || cylinder nr and sector number
+; -> dx || head nr & drive number
+; -> location to place loaded content
+read_disk:    
+    pusha
+
+    mov bp, sp  
+    add bp, 0x12 ; move to before pusha
+
+    mov ax, [bp+0x06]   ; function and sector
+    mov cx, [bp+0x04]   ; cylinder and sector number
+    mov dx, [bp+0x02]   ; head number
+
+    mov bx, 0
+    mov es, bx
+    mov bx, [bp] ; location to put it at
+
+    int 0x13
+
+    jc __rd_err ; if carry = 1, there was an error
+
+    mov cx, [bp+0x06]
+    cmp al, cl   ; if al = 1, we succesfully read one sector
+    je __rd_success
+    jmp __rd_err
+
+    __rd_err:
+        push error_str
+        call print_msg_addr
+        add sp, 2
+        jmp $
+
+    __rd_success:
+        push success_str
+        call print_msg_addr
+        add sp, 2
+        jmp __rd_end
+
+    __rd_end:
+        popa
+        ret
+
+print_msg_addr:
+    pusha
+    mov bp, sp
+    mov bx, [bp+0x12]
+    mov ah, 0x0e
+
+    __print:
+        mov al, [bx]
+        cmp al, 0
+        je __print_end
+
+        int 0x10
+        inc bx
+        jmp __print
+
+    __print_end:
+        mov ah, 0x0e
+        mov al, 0x0d
+        int 0x10
+        mov al, 0x0a
+        int 0x10
+
+        popa
+        ret
+
 
 GDT_start:
     GDT_null:
@@ -59,11 +129,11 @@ GDT_start:
         db 0b11001111
         db 0x0
 
-GDT_end:
+    GDT_end:
 
-GDT_descriptor:
-    dw GDT_end - GDT_start - 1
-    dd GDT_start
+    GDT_descriptor:
+        dw GDT_end - GDT_start - 1
+        dd GDT_start
 
 
 [bits 32]
@@ -79,8 +149,7 @@ start_protected_mode:
 	mov esp, ebp
 
     jmp KERNEL_LOCATION
-
-    
+  
 
     times 510-($-$$) db 0
     db 0x55, 0xaa
