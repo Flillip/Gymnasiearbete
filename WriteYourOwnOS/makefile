@@ -2,7 +2,7 @@ GPPPARAMS = -m32 -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-rtti -fno-excep
 ASPARAMS = --32
 LDPARAMS = -melf_i386
 
-objects = bin/loader.o bin/gdt.o bin/kernel.o
+objects = bin/loader.o bin/port.o bin/gdt.o bin/kernel.o
 
 bin/%.o: %.cpp
 	mkdir -p bin
@@ -33,3 +33,7 @@ mykernel.iso: mykernel.bin
 run: mykernel.iso
 	(killall qemu-system-x86_64 && sleep 1) || true
 	qemu-system-x86_64 -boot d -cdrom ./bin/mykernel.iso -m 512 &
+
+.PHONY: clean
+clean:
+	rm -f $(objects) bin/mykernel.bin bin/mykernel.iso
