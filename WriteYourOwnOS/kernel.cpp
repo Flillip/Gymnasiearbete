@@ -1,5 +1,6 @@
 #include "types.h"
 #include "gdt.h"
+#include "interrupts.h"
 
 const uint8_t WIDTH = 80;
 const uint8_t HEIGHT = 25;
@@ -64,9 +65,11 @@ extern "C" void kernelMain(void* multiBootStructure, uint32_t magicNumber)
 {
     ClearScreen();
     printf("Goodbye World\n");
-
     
     GlobalDescriptorTable gdt;
+    InterruptManager interrupts(&gdt);
+
+    interrupts.Activate();
 
     while(1);
 }

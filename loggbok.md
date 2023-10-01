@@ -12,3 +12,6 @@ Idag jobbade jag mer på stack visualizern. Den har kommit en bra bit nu. Men ka
 
 ## 23-24/09/23
 Ja.... Vet inte ens vart jag ska börja. Har gjort så jävla mycket att jag knappt kommer ihåg allt. Men i alla fall. Gjorde video 4 challenge 2, läst från hårddisk, lärt mig om segment descriptor, fått igång cross compiler. Så ganska mycket...
+
+## 1/10/23
+Glömde att skriva ganska många gånger nu *smh*. Idag har jag i alla fall gjort ett nytt dokument där jag förklarar saker för att jag är dement. Sedan gjorde jag klart video 5 av Write your own operating system och slösade 1 timme av mitt liv på att ändra en 1:a till en 0:a och en 0:a till en 1:a. Men nu har jag interrupts. Till nästa gång ska jag bara fortsätta i serien.

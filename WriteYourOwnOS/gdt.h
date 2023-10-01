@@ -10,7 +10,7 @@ class GlobalDescriptorTable {
             private:
                 uint16_t limit_lo;
                 uint16_t base_lo;
-                uint8_t base_hl;
+                uint8_t base_hi;
                 uint8_t type;
                 uint8_t flags_limit_hi;
                 uint8_t base_vhi;
