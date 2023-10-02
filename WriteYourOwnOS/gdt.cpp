@@ -13,7 +13,7 @@ GlobalDescriptorTable::GlobalDescriptorTable()
 }
 
 GlobalDescriptorTable::~GlobalDescriptorTable()
-{   
+{
 }
 
 uint16_t GlobalDescriptorTable::DataSegmentSelector() {

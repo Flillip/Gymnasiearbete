@@ -1,6 +1,7 @@
 #include "types.h"
 #include "gdt.h"
 #include "interrupts.h"
+#include "keyboard.h"
 
 const uint8_t WIDTH = 80;
 const uint8_t HEIGHT = 25;
@@ -68,6 +69,8 @@ extern "C" void kernelMain(void* multiBootStructure, uint32_t magicNumber)
     
     GlobalDescriptorTable gdt;
     InterruptManager interrupts(&gdt);
+
+    KeyboardDriver keyboard(&interrupts);
 
     interrupts.Activate();
 

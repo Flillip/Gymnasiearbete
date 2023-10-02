@@ -15,3 +15,6 @@ Ja.... Vet inte ens vart jag ska börja. Har gjort så jävla mycket att jag kna
 
 ## 1/10/23
 Glömde att skriva ganska många gånger nu *smh*. Idag har jag i alla fall gjort ett nytt dokument där jag förklarar saker för att jag är dement. Sedan gjorde jag klart video 5 av Write your own operating system och slösade 1 timme av mitt liv på att ändra en 1:a till en 0:a och en 0:a till en 1:a. Men nu har jag interrupts. Till nästa gång ska jag bara fortsätta i serien.
+
+## 2/10/23
+Idag så implementerades Keyboard support! Inget mer att säga. Till nästa gång så fortsätter jag med nästa video i serien.
