@@ -2,6 +2,7 @@
 #include "gdt.h"
 #include "interrupts.h"
 #include "keyboard.h"
+#include "mouse.h"
 
 const uint8_t WIDTH = 80;
 const uint8_t HEIGHT = 25;
@@ -71,6 +72,7 @@ extern "C" void kernelMain(void* multiBootStructure, uint32_t magicNumber)
     InterruptManager interrupts(&gdt);
 
     KeyboardDriver keyboard(&interrupts);
+    MouseDriver mouse(&interrupts);
 
     interrupts.Activate();
 
