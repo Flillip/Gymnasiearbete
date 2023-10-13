@@ -7,6 +7,16 @@ MouseDriver::MouseDriver(InterruptManager* manager)
   dataport(0x60),
   commandport(0x64)
 {
+    
+}
+
+MouseDriver::~MouseDriver()
+{
+
+}
+
+void MouseDriver::Activate()
+{
     while(commandport.Read() & 0x1)
         dataport.Read();
     
@@ -28,11 +38,6 @@ MouseDriver::MouseDriver(InterruptManager* manager)
     commandport.Write(0xD4);
     dataport.Write(0xF4);
     dataport.Read();
-}
-
-MouseDriver::~MouseDriver()
-{
-
 }
 
 uint8_t custom_floor(float a);
