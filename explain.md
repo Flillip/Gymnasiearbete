@@ -92,3 +92,38 @@ The Global Descriptor Table (GDT) is a data structure used in x86 and x86-64 arc
         * The AVL (Available for Use by Software) bit is reserved for software use.
         * It doesn't have a specific predefined purpose in the GDT itself and can be used by software or operating systems for custom purposes.
         * It's often used for additional flags or information that might be needed by the operating system or specific software components.
+
+
+## Interrupt Descriptor Table
+The interrupt descriptor table (IDT) is a data structure used by the x86 architecture to implement an interrupt vector table. The IDT is used by the processor to determine the correct response to interrupts and exceptions. 
+
+ISR = interrupt service routines
+The first 32 (0x20) ISRs are reserved for CPU specific interrupts.
+
+### Layout in memory:
+----------------------------------------------------
+|         Field         |   Size (bits)   | Offset |
+|:---------------------:|:---------------:|:------:|
+|      Offset (low)     |       16        |   0    |
+|       Selector        |       16        |   16   |
+|           0           |        8        |   39   |
+|         Type          |        3        |   32   |
+|           D           |        1        |   35   |
+|           0           |        1        |   35   |
+|          DPL          |        2        |   36   |
+|           P           |        1        |   38   |
+|      Offset (high)    |       16        |   47   |
+----------------------------------------------------
+
+### Short version:
+|       Field         | Size (bits) |          Description          |
+|:-------------------:|:-----------:|:----------------------------:|
+|   Offset (low)      |     16      | Lower 16 bits of handler address |
+|   Selector          |     16      | Segment selector for the handler |
+|         0           |      8      | Reserved (set to 0)            |
+|   Type              |      3      | Type of interrupt or gate      |
+|   D (Descriptor)   |      1      | Gate size indicator (0 for 16-bit, 1 for 32-bit) |
+|         0           |      1      | Reserved (set to 0)            |
+|   DPL (Privilege Level) |   2      | Privilege level required to call the gate |
+|   P (Present)       |      1      | Gate present flag (1 for valid, 0 for inactive) |
+|   Offset (high)     |     16      | Upper 16 bits of handler address |

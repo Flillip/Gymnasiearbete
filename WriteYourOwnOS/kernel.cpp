@@ -56,6 +56,65 @@ void printf(char* str)
     }
 }
 
+void printfHex(uint8_t hexValue)
+{
+    char* txt = "0x00";
+    char* hex = "0123456789ABCDEF";
+    txt[2] = hex[(hexValue >> 4) & 0x0F];
+    txt[3] = hex[(hexValue) & 0x0F];
+    printf(txt);
+}
+
+class PrintfKeyboardEventHandler : public KeyboardEventHandler
+{
+    public:
+        void OnKeyDown(char c)
+        {
+            char* str = " ";
+            str[0] = c;
+            printf(str);
+        }
+};
+
+class MouseToConsole : public MouseEventHandler
+{
+    private:
+        int8_t x, y;
+
+    public:
+        void OnActivate()
+        {
+            uint16_t* VideoMemory = (uint16_t*)0xb8000;
+
+            x = 40;
+            y = 12;
+            VideoMemory[80*12+40] = ((VideoMemory[80*12+40] & 0xF000) >> 4)
+                                | ((VideoMemory[80*12+40] & 0x0F00) << 4)
+                                |  (VideoMemory[80*12+40] & 0x00FF);
+        }
+
+        void OnMouseMove(int xOffset, int yOffset)
+        {
+            static uint16_t* VideoMemory = (uint16_t*)0xb8000;
+
+            VideoMemory[80*y+x] = ((VideoMemory[80*y+x] & 0x0F00) << 4)
+                                | ((VideoMemory[80*y+x] & 0xF000) >> 4)
+                                | (VideoMemory[80*y+x] & 0x00FF);
+
+            x += xOffset;
+            if (x >= 80) x = 79;
+            if (x < 0) x = 0;
+
+            y += yOffset;
+            if (y >= 25) y = 24;
+            if (y < 0) y = 0;
+
+            VideoMemory[80*y+x] = ((VideoMemory[80*y+x] & 0x0F00) << 4)
+                                | ((VideoMemory[80*y+x] & 0xF000) >> 4)
+                                | (VideoMemory[80*y+x] & 0x00FF);
+        }
+};
+
 typedef void (*constructor)();
 extern "C" constructor start_ctors;
 extern "C" constructor end_ctors;
@@ -77,8 +136,11 @@ extern "C" void kernelMain(void* multiBootStructure, uint32_t magicNumber)
 
     DriverManager driverManager;
     
-    KeyboardDriver keyboard(&interrupts);
-    MouseDriver mouse(&interrupts);
+    PrintfKeyboardEventHandler kbhandler; 
+    MouseToConsole mouseHandler;
+
+    KeyboardDriver keyboard(&interrupts, &kbhandler);
+    MouseDriver mouse(&interrupts, &mouseHandler );
 
     driverManager.AddDriver(&keyboard);
     driverManager.AddDriver(&mouse);
