@@ -1,4 +1,6 @@
-#include "driver.h"
+#include <drivers/driver.h>
+
+using namespace OS::drivers;
 
 Driver::Driver()
 {

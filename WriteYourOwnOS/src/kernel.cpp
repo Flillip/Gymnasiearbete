@@ -1,10 +1,12 @@
-#include "types.h"
-#include "gdt.h"
-#include "interrupts.h"
+#include <common/types.h>
+#include <gdt.h>
+#include <hardwarecommunication/interrupts.h>
 
-#include "driver.h"
-#include "keyboard.h"
-#include "mouse.h"
+#include <drivers/driver.h>
+#include <drivers/keyboard.h>
+#include <drivers/mouse.h>
+
+using namespace OS;
 
 const uint8_t WIDTH = 80;
 const uint8_t HEIGHT = 25;

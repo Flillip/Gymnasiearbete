@@ -1,4 +1,4 @@
-#include "keyboard.h"
+#include <drivers/keyboard.h>
 
 void printf(char*);
 void printfHex(uint8_t);

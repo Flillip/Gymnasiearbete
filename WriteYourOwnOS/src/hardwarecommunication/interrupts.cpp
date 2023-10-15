@@ -1,4 +1,4 @@
-#include "interrupts.h"
+#include <hardwarecommunication/interrupts.h>
 
 void printf(char* str);
 void printfHex(uint8_t);
