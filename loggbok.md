@@ -19,5 +19,8 @@ Glömde att skriva ganska många gånger nu *smh*. Idag har jag i alla fall gjor
 ## 2/10/23
 Idag så implementerades Keyboard support! Inget mer att säga. Till nästa gång så fortsätter jag med nästa video i serien.
 
-## 15/10/23
+## 14-15/10/23
 Lärde mig mer om interrupt descriptor tables (IDT) och interrupts. Gjorde också klart video 8 av Write your own Operating System. Jag måste komma ihåg att uppdatera denna loggbok *smh*. Anyway, nästa gång ska jag fortsätta kolla på serien.
+
+## 15/10/23
+Lärde mig om PCI controllers och hur de kommunicerar. Nästa gång ska jag fortsätta kolla på serien.

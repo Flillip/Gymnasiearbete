@@ -1,5 +1,9 @@
 #include <drivers/keyboard.h>
 
+using namespace OS::common;
+using namespace OS::hardwarecommunication;
+using namespace OS::drivers;
+
 void printf(char*);
 void printfHex(uint8_t);
 
@@ -108,7 +112,7 @@ uint32_t KeyboardDriver::HandleInterrupt(uint32_t esp)
             if (key > 0x80)
                 break;
 
-            printf("KEYBOARD ");
+            printf("KEYBOARD 0x");
             printfHex(key);
             break;
     }

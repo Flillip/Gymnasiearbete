@@ -1,5 +1,8 @@
 #include <hardwarecommunication/interrupts.h>
 
+using namespace OS::common;
+using namespace OS::hardwarecommunication;
+
 void printf(char* str);
 void printfHex(uint8_t);
 

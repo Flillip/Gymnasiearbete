@@ -6,10 +6,6 @@
 #include <hardwarecommunication/port.h>
 #include <drivers/driver.h>
 
-using namespace OS::common;
-using namespace OS::hardwarecommunication;
-using namespace OS::drivers;
-
 namespace OS
 {
     namespace drivers
@@ -21,28 +17,28 @@ namespace OS
                 MouseEventHandler();
                 
                 virtual void OnActivate();
-                virtual void OnMouseDown(uint8_t button);
-                virtual void OnMouseUp(uint8_t button);
+                virtual void OnMouseDown(common::uint8_t button);
+                virtual void OnMouseUp(common::uint8_t button);
                 virtual void OnMouseMove(int newX, int newY);
         };
 
-        class MouseDriver : public InterruptHandler, public Driver
+        class MouseDriver : public hardwarecommunication::InterruptHandler, public Driver
         {
             private:
-                Port8Bit dataport;
-                Port8Bit commandport;
+                hardwarecommunication::Port8Bit dataport;
+                hardwarecommunication::Port8Bit commandport;
 
-                uint8_t buffer[3];
-                uint8_t offset;
-                uint8_t buttons;
+                common::uint8_t buffer[3];
+                common::uint8_t offset;
+                common::uint8_t buttons;
 
                 MouseEventHandler* handler;
 
             public:
-                MouseDriver(InterruptManager* manager, MouseEventHandler* handler);
+                MouseDriver(hardwarecommunication::InterruptManager* manager, MouseEventHandler* handler);
                 ~MouseDriver();
 
-                virtual uint32_t HandleInterrupt(uint32_t esp);
+                virtual common::uint32_t HandleInterrupt(common::uint32_t esp);
                 virtual void Activate();
         };
     }

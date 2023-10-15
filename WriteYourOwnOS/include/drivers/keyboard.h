@@ -6,10 +6,6 @@
 #include <hardwarecommunication/port.h>
 #include <drivers/driver.h>
 
-using namespace OS::common;
-using namespace OS::hardwarecommunication;
-using namespace OS::drivers;
-
 namespace OS
 {
     namespace drivers
@@ -23,19 +19,19 @@ namespace OS
                 virtual void OnKeyUp(char);
         };
 
-        class KeyboardDriver : public InterruptHandler, public Driver
+        class KeyboardDriver : public hardwarecommunication::InterruptHandler, public drivers::Driver
         {
             private:
-                Port8Bit dataport;
-                Port8Bit commandport;
+                hardwarecommunication::Port8Bit dataport;
+                hardwarecommunication::Port8Bit commandport;
 
                 KeyboardEventHandler* handler;
 
             public:
-                KeyboardDriver(InterruptManager* manager, KeyboardEventHandler* handler);
+                KeyboardDriver(hardwarecommunication::InterruptManager* manager, KeyboardEventHandler* handler);
                 ~KeyboardDriver();
 
-                virtual uint32_t HandleInterrupt(uint32_t esp);
+                virtual common::uint32_t HandleInterrupt(common::uint32_t esp);
                 virtual void Activate();
         };
     }

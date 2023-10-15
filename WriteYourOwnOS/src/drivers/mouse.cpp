@@ -1,5 +1,9 @@
 #include <drivers/mouse.h>
 
+using namespace OS::common;
+using namespace OS::hardwarecommunication;
+using namespace OS::drivers;
+
 void printf(char*);
 
 MouseEventHandler::MouseEventHandler()

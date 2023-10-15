@@ -127,3 +127,17 @@ The first 32 (0x20) ISRs are reserved for CPU specific interrupts.
 |   DPL (Privilege Level) |   2      | Privilege level required to call the gate |
 |   P (Present)       |      1      | Gate present flag (1 for valid, 0 for inactive) |
 |   Offset (high)     |     16      | Upper 16 bits of handler address |
+
+## PCI
+PCI (Peripheral Component Interconnect) is a computer bus standard used to connect internal hardware devices to the CPU and motherboard. It provides a common data transfer pathway for components like graphics cards, network cards, and storage controllers. PCI comes in different versions, with PCI Express (PCIe) being the most common, offering high-speed data transfer, hot-swappability, and plug-and-play functionality. It plays a crucial role in expanding a computer's capabilities by allowing the addition of various hardware components.
+
+### Layout
+| Bit Range  | Purpose               | Description                   |
+|------------|-----------------------|-------------------------------|
+| 31         | Operation Indicator   | 1 (Read Operation)            |
+| 30-24      | Reserved              | Reserved (usually set to 0)   |
+| 23-16      | Bus Number            | Value from the `bus` variable |
+| 15-11      | Device Number         | Value from the `device` variable |
+| 10-8       | Function Number       | Value from the `function` variable |
+| 7-2        | Register Offset       | Value from the `registeroffset` variable |
+| 1-0        | Reserved              | Reserved (usually set to 0)   |

@@ -1,11 +1,15 @@
 #include <common/types.h>
 #include <gdt.h>
 #include <hardwarecommunication/interrupts.h>
+#include <hardwarecommunication/pci.h>
 
 #include <drivers/driver.h>
 #include <drivers/keyboard.h>
 #include <drivers/mouse.h>
 
+using namespace OS::common;
+using namespace OS::drivers;
+using namespace OS::hardwarecommunication;
 using namespace OS;
 
 const uint8_t WIDTH = 80;
@@ -60,10 +64,10 @@ void printf(char* str)
 
 void printfHex(uint8_t hexValue)
 {
-    char* txt = "0x00";
+    char* txt = "00";
     char* hex = "0123456789ABCDEF";
-    txt[2] = hex[(hexValue >> 4) & 0x0F];
-    txt[3] = hex[(hexValue) & 0x0F];
+    txt[0] = hex[(hexValue >> 4) & 0x0F];
+    txt[1] = hex[(hexValue) & 0x0F];
     printf(txt);
 }
 
@@ -146,6 +150,9 @@ extern "C" void kernelMain(void* multiBootStructure, uint32_t magicNumber)
 
     driverManager.AddDriver(&keyboard);
     driverManager.AddDriver(&mouse);
+
+    PeripheralComponentInterconnectController PCIController;
+    PCIController.SelectDrivers(&driverManager);
 
     printf("Initializing Hardware, Stage 2\n");
     driverManager.ActivateAll();

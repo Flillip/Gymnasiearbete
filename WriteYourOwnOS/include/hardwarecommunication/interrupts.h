@@ -5,9 +5,6 @@
 #include <hardwarecommunication/port.h>
 #include <gdt.h>
 
-using namespace OS::common;
-using namespace OS::hardwarecommunication;
-
 namespace OS
 {
     namespace hardwarecommunication
@@ -17,14 +14,14 @@ namespace OS
         class InterruptHandler
         {
             protected:
-                uint8_t interruptNumber;
+                common::uint8_t interruptNumber;
                 InterruptManager* interruptManager;
 
-                InterruptHandler(uint8_t interruptNumber, InterruptManager* interruptManager);
+                InterruptHandler(common::uint8_t interruptNumber, InterruptManager* interruptManager);
                 ~InterruptHandler();
 
             public:
-                virtual uint32_t HandleInterrupt(uint32_t esp);
+                virtual common::uint32_t HandleInterrupt(common::uint32_t esp);
         };
 
         class InterruptManager 
@@ -37,11 +34,11 @@ namespace OS
 
                 struct GateDescriptor
                 {
-                    uint16_t handlerAddressLowBits;
-                    uint16_t gdt_codeSegmentSelector;
-                    uint8_t reserved;
-                    uint8_t access;
-                    uint16_t handlerAddressHighBits;
+                    common::uint16_t handlerAddressLowBits;
+                    common::uint16_t gdt_codeSegmentSelector;
+                    common::uint8_t reserved;
+                    common::uint8_t access;
+                    common::uint16_t handlerAddressHighBits;
 
                 } __attribute__((packed));
             
@@ -49,17 +46,17 @@ namespace OS
 
                 struct InterruptDescriptorTablePointer
                 {
-                    uint16_t size;
-                    uint32_t base;
+                    common::uint16_t size;
+                    common::uint32_t base;
                 } __attribute__((packed));
                 
 
                 static void SetInterruptDescriptorTableEntry(
-                    uint8_t interruptNumber, 
-                    uint16_t gdt_codeSegmentSelector,
+                    common::uint8_t interruptNumber, 
+                    common::uint16_t gdt_codeSegmentSelector,
                     void (*handler)(),
-                    uint8_t DescriptorPrivilegeLevel,
-                    uint8_t DescriptorTypeFlags
+                    common::uint8_t DescriptorPrivilegeLevel,
+                    common::uint8_t DescriptorTypeFlags
                 );
 
                 Port8BitSlow picMasterCommand;
@@ -75,8 +72,8 @@ namespace OS
                 void Activate();
                 void Deactivate();
                 
-                static uint32_t handleInterrupt(uint8_t interruptNumber, uint32_t esp);
-                uint32_t DoHandleInterrupt(uint8_t interruptNumber, uint32_t esp);
+                static common::uint32_t handleInterrupt(common::uint8_t interruptNumber, common::uint32_t esp);
+                common::uint32_t DoHandleInterrupt(common::uint8_t interruptNumber, common::uint32_t esp);
                 
                 static void IgnoreInterruptRequest();
                 static void HandleInterruptRequest0x00();

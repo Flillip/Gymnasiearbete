@@ -1,5 +1,6 @@
 #include <gdt.h>
 
+using namespace OS::common;
 using namespace OS;
 
 GlobalDescriptorTable::GlobalDescriptorTable() 
