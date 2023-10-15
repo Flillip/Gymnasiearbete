@@ -3,3 +3,4 @@ https://youtube.com/playlist?list=PLFjM7v6KGMpiH2G-kT781ByCNC_0pKpPN
 https://youtube.com/playlist?list=PLm3B56ql_akNcvH8vvJRYOc7TbYhRs19M
 https://youtube.com/playlist?list=PLHh55M_Kq4OApWScZyPl5HhgsTJS9MZ6M
 https://www.fountainware.com/EXPL/bios_key_codes.htm
+https://dev.to/frosnerd/writing-my-own-keyboard-driver-16kh
