@@ -10,6 +10,21 @@ namespace OS
 {
     namespace hardwarecommunication
     {
+        enum BaseAddressRegisterType
+        {
+            MemoryMapping = 0,
+            InputOutput = 1
+        };
+
+        class BaseAddressRegister
+        {
+            public:
+                bool prefetchable;
+                common::uint8_t* address;
+                common::uint32_t size;
+                BaseAddressRegisterType type;
+        };
+
         class PeripheralComponentInterconnectDescriptor
         {
             public:
@@ -47,8 +62,10 @@ namespace OS
                 void Write(common::uint16_t bus, common::uint16_t device, common::uint16_t function, common::uint32_t registeroffset, common::uint32_t value);
                 bool DeviceHasFunctions(common::uint16_t bus, common::uint16_t device);
 
-                void SelectDrivers(drivers::DriverManager* driverManager);
+                void SelectDrivers(drivers::DriverManager* driverManager, hardwarecommunication::InterruptManager* interrupts);
+                drivers::Driver* GetDriver(PeripheralComponentInterconnectDescriptor, hardwarecommunication::InterruptManager*);
                 PeripheralComponentInterconnectDescriptor GetDeviceDescriptor(common::uint16_t bus, common::uint16_t device, common::uint16_t function);
+                BaseAddressRegister GetBaseAddressRegister(common::uint16_t bus, common::uint16_t device, common::uint16_t function, common::uint16_t bar);
         };
     }
 }

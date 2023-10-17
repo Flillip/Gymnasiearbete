@@ -152,7 +152,7 @@ extern "C" void kernelMain(void* multiBootStructure, uint32_t magicNumber)
     driverManager.AddDriver(&mouse);
 
     PeripheralComponentInterconnectController PCIController;
-    PCIController.SelectDrivers(&driverManager);
+    PCIController.SelectDrivers(&driverManager, &interrupts);
 
     printf("Initializing Hardware, Stage 2\n");
     driverManager.ActivateAll();

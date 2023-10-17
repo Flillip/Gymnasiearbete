@@ -2,6 +2,8 @@
     "files.associations": {
         "xlocale": "cpp",
         "xstring": "cpp",
-        "xutility": "cpp"
+        "xutility": "cpp",
+        "limits": "cpp",
+        "type_traits": "cpp"
     }
 }

@@ -24,3 +24,6 @@ Lärde mig mer om interrupt descriptor tables (IDT) och interrupts. Gjorde ocks�
 
 ## 15/10/23
 Lärde mig om PCI controllers och hur de kommunicerar. Nästa gång ska jag fortsätta kolla på serien.
+
+## 17/10/23
+Jobbade mer med PCI controllers och BaseAddressRegisters. Ingen aning vad det är så till nästa gångs så ska jag läsa upp mer om detta och sedan fortsätta med wyoos.

@@ -41,7 +41,7 @@ mykernel.iso: mykernel.bin
 
 run: mykernel.iso
 	(killall qemu-system-x86_64 && sleep 1) || true
-	qemu-system-x86_64 -boot d -cdrom ./bin/mykernel.iso -m 512 &
+	qemu-system-x86_64 -device pcnet -boot d -cdrom ./bin/mykernel.iso -m 512 &
 
 .PHONY: clean
 clean:
